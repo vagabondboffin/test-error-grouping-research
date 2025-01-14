@@ -95,3 +95,54 @@ The approach can be divided into four main steps:
 ### Notes
 - This approach focuses solely on stack traces, which can be beneficial when bug descriptions are informal or unreliable. 
 - Subsequent studies have cited this work, indicating its influence in the field of software maintenance and bug tracking. 
+
+--- 
+## 📰 TraceSim: A Method for Calculating Stack Trace Similarity 
+**Author(s):** Roman Vasiliev, Dmitrij Koznov, George Chernishev, Aleksandr Khvorov, Dmitry Luciv, Nikita Povarov
+
+**Year of Publication:** 2020
+
+**Link/DOI:** 
+
+### Intro/Summary
+Vasiliev et al. addressed the problem f computing stack track similarity by constructing a measure that combines TF-IDF, edit distance, and supervised machine learning.
+### Approach
+The suggested algorithm is as follows:
+1. Separate processing of Stack Overflow Exceptions (SOEs): In  this case they use the TF-IDF algorithm.
+2. Frame weight computation: They considered different weight for different frames in a stack. Differences in frames that are close to the top of the stack were considered more important, i.e., error are more likely caused by the functions which were called last. To calculate the overall weight of a frame, they identified two factors: local weight of that frame which is relative to its position in the trace and the global weight which represents the importance of that frame for the whole corpus of stack traces. The global weight is calculated according to TF-IDF approach.
+3.  Levenshtein distance calculation: They used this distance to express the distance between two stack traces. They also considered the weight of each frame.
+4. Normalization: They use a normalized similarity value instead of directly using the calculated distance.
+5. Hyperparameter Estimation via Machine Learning: They formulate an optimization problem to calculate the parameters of weights. They trained on a manually labeled sub dataset. The Tree-structured Parzen Estimator Approach was used.
+
+### Dataset
+They used the JetBrains crash report processing system Exception Analyzer which handles reports and automatically distributes them into buckets.
+To be able to evaluate the method, they observed developer's behaviour: They extracted and analyzed
+reports from recent user action logs of Exception Analyzer
+spanning one year time frame. To create positive pairs they have
+analyzed user sessions and searched for the following pattern:
+for a particular unbucketed report, a user looks into some issue,
+compares it to a particular report of this issue and then assigns
+it into the issue. To obtain negative pairs they exploit a similar
+idea: they designate a pair as negative if a user compared reports
+and did not group them.
+### tags
+- Crash Reports, Duplicate Bug Report, Duplicate Crash Report, Crash Report Deduplication, Information
+  Retrieval, Software Engineering, Automatic Crash Reporting,
+  Deduplication, Crash Stack, Stack Trace, Automatic Problem
+  Reporting Tools, Software Repositories.
+### Notes
+- They concluded that the global weight parameter contributed significantly to the result. 
+- Link to implementation: https://github.com/traceSimSubmission/trace-sim/blob/master/trace_sim.py
+
+--- 
+
+## 📰 [Article Tile]
+**Author(s):**
+**Year of Publication:**
+**Link/DOI:** 
+
+### Intro/Summary
+### Approach
+### Dataset
+### tags
+### Notes
