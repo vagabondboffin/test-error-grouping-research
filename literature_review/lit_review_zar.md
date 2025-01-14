@@ -1,6 +1,6 @@
 # Literature Review: Test Error Grouping/Crash Bucketing
 
-## Semantic Crash Bucketing
+## 📰 Semantic Crash Bucketing
 **Author(s):** Rijnard van Tonder, John Kotheimer, Claire Le Goues 
 
 **Year of Publication:** 2018  
@@ -59,7 +59,7 @@ The steps are as follows:
 
 ---
 
-## Finding Duplicates of Your Yet Unwritten Bug Report
+## 📰 Finding Duplicates of Your Yet Unwritten Bug Report
 **Author(s):** Johannes Lerch and Mira Mezini
 
 **Year of Publication:** 2013
