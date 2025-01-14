@@ -2,7 +2,9 @@
 
 ## Semantic Crash Bucketing
 **Author(s):** Rijnard van Tonder, John Kotheimer, Claire Le Goues 
+
 **Year of Publication:** 2018  
+
 **Link/DOI:** https://dl.acm.org/doi/pdf/10.1145/3238147.3238200
 
 ---
@@ -14,7 +16,9 @@ Semantic Crash Bucketing (SCB) is an approach to automatically identify unique b
 
 ### Approach
 Here is the SCB approach:
+
 ![img.png](imgs/SemanticCrashBucketing.png)
+
 The developer's fix provides the best assurance of correctly fixing a bug, which is the ground truth T for SCB. But how do they obtain the approximate fix?
 #### For Null Dereferences:
 They inserted a simple **exit(101)** instruction when the variable is **null**. 
@@ -56,3 +60,34 @@ The steps are as follows:
 - SCB relies heavily on approximate fixes derived from rule-based templates and debugging tools.
 - The developer’s actual fix is used as the ground truth for validating the approach.
 
+---
+
+## Finding Duplicates of Your Yet Unwritten Bug Report
+**Author(s):** Johannes Lerch and Mira Mezini
+
+**Year of Publication:** 2013
+
+**Link/DOI:** https://ieeexplore.ieee.org/document/6498456
+
+---
+
+### Intro/Summary
+Lerch and Mezini proposed an approach for detecting duplicate bug reports using only stack traces as input for machine learning algorithms. This method aims to identify potential duplicates before a new bug report is fully written, improving efficiency in bug tracking systems.
+
+### Approach
+The approach can be divided into four main steps:
+1. Detection of stack traces
+   They used a template containing EXCEPTION, MESSAGE, METHOD, SOURCE, and TEMPLATE to part the stack traces.
+2. Indexing
+   They used the notion of document and term related to search indexes. They employed the following indexed terms. The fully qualified exception type is used as a single term; any word contained in the message of length >= 3 is indexed in lower case; each fully qualified method of the call stack is considered as a single term. The source part is left out. Terms of nested stack traces are equally included, i.e. each stack trace can contribute multiple exception type terms. They used fully qualified names in normalized dot-separator representation
+3. Searching
+   They used term frequency and inverse document frequency approach. They computed a score for each document (each bug report).
+4. Time Frames
+   They worked with different time frames (limiting the amount of potential duplicates considered to a fixed time frame before the submission of a new report). They found that for Eclipse, the best results are between 200 and 800 days.
+
+### Dataset
+- Used Bugzilla entries from the Eclipse project retrieved by Zimmermann
+- Dataset included 19,358 bug reports containing at least one usable stack trace
+- In the evaluation all bug reports are inserted to the search
+  index, but only bug reports that have duplicates already added
+  to the bug tracker are used as query.
