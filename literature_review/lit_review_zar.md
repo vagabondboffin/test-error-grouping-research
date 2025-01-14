@@ -1,7 +1,7 @@
 # Literature Review: Test Error Grouping/Crash Bucketing
 
 ## 📰 Semantic Crash Bucketing
-**Author(s):** Rijnard van Tonder, John Kotheimer, Claire Le Goues 
+**Author(s):** van Tonder et al.
 
 **Year of Publication:** 2018  
 
@@ -98,8 +98,8 @@ The approach can be divided into four main steps:
 
 --- 
 ## 📰 TraceSim: A Method for Calculating Stack Trace Similarity 
-**Author(s):** Roman Vasiliev, Dmitrij Koznov, George Chernishev, Aleksandr Khvorov, Dmitry Luciv, Nikita Povarov
-
+**Author(s):** Vasiliev et al.
+✅
 **Year of Publication:** 2020
 
 **Link/DOI:** 
@@ -133,6 +133,39 @@ and did not group them.
 ### Notes
 - They concluded that the global weight parameter contributed significantly to the result. 
 - Link to implementation: https://github.com/traceSimSubmission/trace-sim/blob/master/trace_sim.py
+
+---
+## 📰 S3M: Siamese Stack (Trace) Similarity Measure
+
+**Author(s):** Khvorov et al. 
+
+**Year of Publication:** 2021
+
+**Link/DOI:** https://arxiv.org/abs/2103.10526
+
+### Intro/Summary
+Khvorov et al. introduced S3M ("extreme"), the first deep learning approach for calculating stack trace similarity in crash report deduplication. This method utilizes a siamese architecture with a biLSTM encoder and two fully-connected layers as a classifier.
+
+### Approach
+![img.png](imgs/S3MApproach.png)
+The S3M approach consists of four main steps:
+1. Preprocessing (Tokenization and Trimming)
+Experimented with different types of trace trimming.
+2. Vector Representation of Stack Traces
+Utilized a biLSTM network for encoding.
+3. Algorithm
+Fed encoded representations into a fully connected 2-layer network.
+4. Training
+Used RankNet loss to enhance ranking accuracy.
+
+### Dataset
+- Public dataset: NetBeans
+- Private dataset: JetBrains stack traces
+
+### tags
+- Crash Report, Stack Trace, Deduplication, Automatic Crash Reporting, Deep Learning 
+
+### Notes
 
 --- 
 
