@@ -99,7 +99,7 @@ The approach can be divided into four main steps:
 --- 
 ## 📰 TraceSim: A Method for Calculating Stack Trace Similarity 
 **Author(s):** Vasiliev et al.
-✅
+
 **Year of Publication:** 2020
 
 **Link/DOI:** 
