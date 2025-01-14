@@ -7,12 +7,10 @@
 
 **Link/DOI:** https://dl.acm.org/doi/pdf/10.1145/3238147.3238200
 
----
 
 ### Intro/Summary
 Semantic Crash Bucketing (SCB) is an approach to automatically identify unique bugs by modifying a program's semantics. It groups crashing inputs based on program transformations that nullify the crashes. The approach uses bug-fixing patch templates and rule-based patch applications to approximate correct fixes. SCB ensures that crashes are grouped according to program changes that nullify those inputs, providing a way to categorize bugs semantically.
 
----
 
 ### Approach
 Here is the SCB approach:
@@ -49,12 +47,11 @@ The steps are as follows:
 - **Bug Types:** Buffer overflows and null dereferences.
 - **Experimental Setup:** Controlled experiments with real bugs where the ground truth fixes are known.
 
----
+
 
 ### Tags
 - Crash Bucketing, Fuzzing, Bug Triage, Program Transformation, Automated Bug Fixing
 
----
 
 ### Notes
 - SCB relies heavily on approximate fixes derived from rule-based templates and debugging tools.
@@ -69,7 +66,7 @@ The steps are as follows:
 
 **Link/DOI:** https://ieeexplore.ieee.org/document/6498456
 
----
+
 
 ### Intro/Summary
 Lerch and Mezini proposed an approach for detecting duplicate bug reports using only stack traces as input for machine learning algorithms. This method aims to identify potential duplicates before a new bug report is fully written, improving efficiency in bug tracking systems.
@@ -91,3 +88,10 @@ The approach can be divided into four main steps:
 - In the evaluation all bug reports are inserted to the search
   index, but only bug reports that have duplicates already added
   to the bug tracker are used as query.
+
+### Tags
+- Stack Trace, Duplicate Detection, Bug Report
+
+### Notes
+- This approach focuses solely on stack traces, which can be beneficial when bug descriptions are informal or unreliable. 
+- Subsequent studies have cited this work, indicating its influence in the field of software maintenance and bug tracking. 
