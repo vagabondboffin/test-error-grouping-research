@@ -161,7 +161,7 @@ Browse the data using this [link](https://github.com/squaresLab/SemanticCrashBuc
 
 ### Tags
 
-- Fuzzing, Approximate Fixes
+- Fuzzing, Approximate Fixes, Crash Report
 
 ### Notes
 
@@ -229,7 +229,7 @@ Real-life database of crash reports collected for JetBrains products. This paper
 
 ### Tags
 
-- TraceSim
+- TraceSim, Stack Trace
 
 ### Notes
 
@@ -257,7 +257,7 @@ Real-life database of crash reports collected for JetBrains products. This paper
 
 ## 📰 S3M: Siamese Stack (Trace) Similarity Measure
 
-**Author(s):**
+**Author(s):** Aleksandr Khvorov, Roman Vasiliev, George Chernishev, Irving Muller Rodrigues, Dmitrij Koznov, Nikita Povarov
 
 **Year of Publication:** 2021
 
@@ -265,11 +265,19 @@ Real-life database of crash reports collected for JetBrains products. This paper
 
 ### Intro/Summary
 
+The paper presents [S3M](https://github.com/akhvorov/S3M) (“extreme”) — the first approach to computing stack trace similarity based on deep learning. It is based on a siamese architecture that uses a biLSTM encoder and a fully-connected classifier to compute similarity.
+
 ### Approach
+
+![img.png](imgs/S3MApproach.png)
 
 ### Dataset
 
+The JetBrains dataset was created from stack traces that emerge after every crash of a JetBrains product. The NetBeans dataset was generated from reports submitted before 2016 in the bug tracker of [NetBeans’s project](https://bz.apache.org/netbeans/). The NetBean dataset is available by this [link](https://figshare.com/articles/dataset/netbeans_stacktraces_json/14135003?file=26653739).
+
 ### Tags
+
+- Deep Learning, Available Dataset, Stack Trace
 
 ### Notes
 
@@ -277,7 +285,7 @@ Real-life database of crash reports collected for JetBrains products. This paper
 
 ## 📰 FaST: a linear time stack trace alignment heuristic for crash report deduplication
 
-**Author(s):**
+**Author(s):** Irving Muller Rodrigues, Daniel Aloise, Eraldo Rezende Fernandes
 
 **Year of Publication:** 2022
 
