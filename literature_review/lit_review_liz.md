@@ -171,19 +171,65 @@ To utilize this method we should know approximate fixes and have an access to co
 
 ## 📰 TraceSim: A Method for Calculating Stack Trace Similarity
 
-**Author(s):**
+**Author(s):** Roman Vasiliev, Dmitrij Koznov, George Chernishev, Aleksandr Khvorov, Dmitry Luciv\dagger , Nikita Povarov
 
 **Year of Publication:** 2020
 
-**Link/DOI:**
+**Link/DOI:** http://arxiv.org/abs/2009.12590
 
 ### Intro/Summary
 
+The paper presents [TraceSim](https://github.com/traceSimSubmission/trace-sim) — a novel approach to address this problem which combines TF-IDF, Levenshtein distance, and machine learning to construct a similarity metric. Also, provides comprehensive overview of existing approaches at that time:
+
+![TraceSimExistingApproaches.png](imgs/TraceSimExistingApproaches.png)
+
 ### Approach
+
+### A. **Handling Stack Overflow Exceptions (SOEs)**
+
+- **Challenge:** Stack traces from SOEs contain repetitive frames due to recursion, making them large.
+- **Solution:** Use TF-IDF to compute frame frequencies, as these are sufficient for detecting similarities in recursive stack traces.
+
+### B. **Frame Weight Computation**
+
+- **Importance of Frames:** Frames closer to the top of the stack are more critical for identifying errors.
+- **Weight Calculation:**
+  - **Local Weight:** Importance of a frame within its stack trace, inversely proportional to its position (closer = higher weight).
+  - **Global Weight:** Importance of a frame across all stack traces, based on its rarity (calculated using IDF).
+  - **Sigmoid Function:** Adjusts global weight to downplay very common frames (e.g., library or framework-related frames).
+
+Weight formula:
+
+![TraceSimWeightFormula.png](imgs/TraceSimWeightFormula.png)
+
+### C. **Levenshtein Distance**
+
+- **Modified Metric:** Uses the classic Levenshtein distance (insertion, deletion, replacement) adapted for stack traces.
+  - Frame weights influence operation costs:
+    - **Insertion/Deletion Cost:** Weight of the frame.
+    - **Substitution Cost:** Sum of the weights of the replaced and new frames.
+  - Frame order is critical; transpositions are not allowed.
+
+### D. **Normalized Similarity**
+
+- **Similarity Formula:** Normalizes Levenshtein distance to compute a similarity score between stack traces:
+  - Accounts for frame weights and ensures results are interpretable as similarity values.
+
+### E. **Hyperparameter Optimization**
+
+- **Hyperparameters:** `α`, `β`, and `γ` control the weight calculations.
+- **Optimization Process:**
+  - Formulated as an ROC AUC maximization problem.
+  - **Method:** Tree-structured Parzen Estimator (TPE) using the [hyperopt](https://github.com/hyperopt/hyperopt) library.
+  - **Training Data:** A manually labeled subset of the stack trace dataset.
 
 ### Dataset
 
+Real-life database of crash reports collected for JetBrains products. This paper examines Java exceptions only. The dataset is **NOT** available.
+
 ### Tags
+
+- TraceSim
 
 ### Notes
 
