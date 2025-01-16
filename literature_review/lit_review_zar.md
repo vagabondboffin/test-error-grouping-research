@@ -190,7 +190,7 @@ Many of the bug reports in Ubuntu's repository have been manually deduplicated b
 - Near-duplicate and plagiarism detection; Software testing and debugging; Maintaining software;
 --- 
 ## 📰 Igor: Crash Deduplication Through Root-Cause Clustering
-**Author(s):** Zhiyuan Jiang, Xiyue Jiang, Ahmad Hazimeh, Chaojing Tang, Chao Zhang, Mathias Payer  
+**Author(s):** Jiang et al. 
 **Year of Publication:** 2021  
 **Link/DOI:** https://netsec.ccert.edu.cn/publications/ccs21-igor
 
