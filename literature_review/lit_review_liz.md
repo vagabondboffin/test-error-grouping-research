@@ -367,7 +367,7 @@ The datasets published by Rodrigues et al. is used. It was created by parsing bu
 
 ## 📰 Stack Trace Deduplication: Faster, More Accurately, and in More Realistic Scenarios
 
-**Author(s):**
+**Author(s):** Egor Shibaev, Denis Sushentsev, Yaroslav Golubev, Aleksandr Khvorov
 
 **Year of Publication:** 2024
 
@@ -375,13 +375,79 @@ The datasets published by Rodrigues et al. is used. It was created by parsing bu
 
 ### Intro/Summary
 
+This paper presents three main contributions: a novel model, an industry-based dataset, and a multi-faceted evaluation. The model consists of two parts — (1) an embedding model with byte-pair encoding and approximate nearest neighbor search to quickly find the most relevant stack traces to the incoming one, and (2) a reranker that re-ranks the most fitting stack traces, taking into account the repeated frames between them.
+
 ### Approach
+
+![StackTraceDeduplicationApproach.png](imgs/StackTraceDeduplicationApproach.png)
+
+#### **1. Embedding Model (Stage 1)**
+
+Efficiently retrieves the **K most relevant stack traces** from an index for an incoming report.
+
+1. **Preprocessing and Tokenization**:
+
+   - Splits package, class, and method names using **Byte Pair Encoding (BPE)**.
+   - Adapts tokenization for language-specific conventions (e.g., camelCase for Java, snake_case for Python).
+   - Trains BPE on stack trace datasets for domain-specific vocabulary.
+
+2. **Stack Frame Embedding**:
+
+   - Converts tokenized frames into vectors using a **biLSTM**.
+   - Aggregates embeddings of frames using a combination of **average**, **max**, and **hidden state** methods for enhanced representation.
+
+3. **Stack Trace Embedding**:
+
+   - Encodes stack traces as sequences of frame embeddings using **biLSTM**.
+   - Produces a single vector per stack trace by combining aggregated frame embeddings.
+
+4. **Training**:
+
+   - Uses pairs of stack traces (anchor and positive) for supervised learning.
+   - Employs the **InfoNCE loss function** to maximize similarity between anchors and positive examples while distinguishing them from negatives.
+
+5. **Indexing with FAISS**:
+   - Precomputes embeddings of existing stack traces and stores them in an index.
+   - At query time, retrieves **K closest candidates** based on similarity.
+
+---
+
+#### **2. Reranker (Stage 2)**
+
+Refines the ranking of the **K retrieved candidates** for improved precision.
+
+1. **Cross-Encoder**:
+
+   - Enhances frame embeddings with a **significance vector (V)** if frames appear in both query and candidate stack traces.
+   - Aggregates frame embeddings into stack trace embeddings using a biLSTM and concatenates the results for scoring.
+
+2. **Training**:
+
+   - Trains with triplets: anchor (query), positive (same category), and negative (different category).
+   - Optimizes a **Binary Cross-Entropy (BCE) loss function** to distinguish between similar and dissimilar stack traces.
+
+3. **Final Decision**:
+   - Re-ranks the **K candidates** based on similarity scores.
+   - If the top similarity score exceeds a threshold \( T \), the query is assigned to the same category as the top candidate.
+   - If no candidate exceeds \( T \), a new category is created.
+
+![StackTraceDeduplicationArchitecture.png](imgs/StackTraceDeduplicationArchitecture.png)
 
 ### Dataset
 
+The paper provides new dataset called [SlowOps](https://zenodo.org/records/14364858) — a dataset of stack traces from IntelliJ-based products developed by JetBrains, which has an order of magnitude more stack traces per category.
+
+Comparison between commonly used open-source datasets and SlowOps:
+
+![SlowOpsComparisonDatasets.png](imgs/SlowOpsComparisonDatasets.png)
+
 ### Tags
 
+- Embedded model
+
 ### Notes
+
+The replication package can be accessed through the [link](https://github.com/JetBrains-Research/stack-trace-deduplication?tab=readme-ov-file).
 
 ---
 
