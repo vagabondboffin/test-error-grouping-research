@@ -293,11 +293,73 @@ The JetBrains dataset was created from stack traces that emerge after every cras
 
 ### Intro/Summary
 
+The paper proposes [FaST](https://github.com/irving-muller/FaST), a novel sequence alignment method that computes the similarity score between two stack traces in linear time. Also, it evaluates FaST and five competing methods (TraceSim, PDM, Prefix Match, TF-IDF, and DURFEX) on four datasets from open-source projects using ranking and binary metrics.
+
 ### Approach
+
+![FastAlgorithm.png](imgs/FastAlgorithm.png)
+
+#### Approach Steps:
+
+1. **Global Alignment Framework**:
+
+   - Compares stack traces using three alignment types:
+     - **Match:** Aligns identical frames (e.g., matching two "a" frames).
+     - **Mismatch:** Aligns differing frames (e.g., "a" and "b").
+     - **Gap:** Aligns a frame with an empty placeholder (insertion/deletion).
+
+2. **Simplified Alignment**:
+
+   - Frames are matched based on identifiers and positions in sorted lists.
+   - Frames without matches are aligned to gaps, as gaps are empirically better than mismatches for deduplication.
+
+3. **Scoring Scheme**:
+
+   - **Match Value:** Determined by the importance (weight) of matched frames and their positional difference
+   - **Gap Value:** Equal to the weight of the frame aligned to the gap.
+   - Frame weight considers:
+     - **Position:** Frames near the top of the stack are weighted higher.
+     - **Rarity:** Frequent frames across stack traces (e.g., library or framework frames) are given lower weights.
+
+4. **Normalization**:
+
+   - Ensures similarity scores fall within \([-1.0, 1.0]\) by dividing the alignment score by the total frame weights in both stack traces.
+
+5. **Efficiency**:
+   - Uses sorted lists of frames for linear-time alignment.
+   - Reduces complexity by skipping unnecessary computations.
+
+#### Limitations:
+
+- Does not directly penalize order inversions, though positional penalties reduce their impact.
+- Results in suboptimal alignments compared to Needleman-Wunsch (NW) but compensates with much higher computational efficiency.
+
+#### Benefits:
+
+- **Speed:** Handles real-world deduplication tasks involving many comparisons efficiently.
+- **Accuracy:** Incorporates frame importance and position to balance precision and computational cost.
+
+#### Example:
+
+For two stack traces \( ST_1 \) and \( ST_2 \), the FaST algorithm:
+
+1. Sorts frames by identifier and position.
+2. Matches identical frames while aligning unmatched frames to gaps.
+3. Computes a normalized similarity score to classify or cluster crash reports.
+
+![FastApproach.png](imgs/FastApproach.png)
+
+![FastNormalization.png](imgs/FastNormalization.png)
 
 ### Dataset
 
+The datasets published by Rodrigues et al. is used. It was created by parsing bug reports from bug tracking systems (BTS) of four open source projects: Ubuntu, Eclipse, Netbeans, and Gnome. They can be accessed by the [link](https://zenodo.org/records/5746044#.YeDFCNtyZH5). In this paper additional preprocessing was applied to the initial dataset.
+
+![FastDataset.png](imgs/FastDataset.png)
+
 ### Tags
+
+- Stack Trace
 
 ### Notes
 
