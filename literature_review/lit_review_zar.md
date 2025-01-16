@@ -166,9 +166,59 @@ Used RankNet loss to enhance ranking accuracy.
 - Crash Report, Stack Trace, Deduplication, Automatic Crash Reporting, Deep Learning 
 
 ### Notes
+---
+## 📰 The Unreasonable Effectiveness of Traditional Information Retrieval in Crash Report Deduplication
+**Author(s)**: Campbell et al.
 
+**Year of Publication**: 2016
+
+**Link/DOI**: https://softwareprocess.es/pubs/campbell2016MSR-partycrasher.pdf
+
+### Intro/Summary
+Campbell et al. extended the work of Lerch and Mezini by presenting PartyCrasher, a framework for bucketing crash reports. They evaluated existing methods for crash report deduplication and proposed criteria for assessing these methods, highlighting the effectiveness of traditional information retrieval techniques in this domain.
+### Approach
+The approach involves several key criteria for crash report deduplication methods:
+- Each new incoming crash must be able to be assigned a bucket in *O(log n)* time or better.
+- The method must be *online*.
+- The method must be *unsupervised*.
+- The method must be *non-stationary*.
+A general-purpose Python framework was developed to support and evaluate various deduplication methods by simulating automated crash reports arriving over time.
+### Dataset
+Used a mining tool (Bicho) to extract crash reports from Ubuntu's bug repository.
+Many of the bug reports in Ubuntu's repository have been manually deduplicated by humans.
+### Tags
+- Near-duplicate and plagiarism detection; Software testing and debugging; Maintaining software;
 --- 
+## 📰 Igor: Crash Deduplication Through Root-Cause Clustering
+**Author(s):** Zhiyuan Jiang, Xiyue Jiang, Ahmad Hazimeh, Chaojing Tang, Chao Zhang, Mathias Payer  
+**Year of Publication:** 2021  
+**Link/DOI:** https://netsec.ccert.edu.cn/publications/ccs21-igor
 
+### Intro/Summary
+Jiang et al. developed Igor, an automated dual-phase crash deduplication technique that combines a coverage-reduction fuzzer with a control-flow graph (CFG) similarity metric to effectively cluster crashes. The goal of Igor is to minimize the number of reported crashes in software testing by refining proof-of-concept (PoC) test cases for observed unique crashes. The authors argue that existing techniques often inflate bug counts and conflate unrelated bugs, necessitating more accurate methods.
+
+### Approach
+Igor operates through two main phases:
+1. **Minimization of Execution Traces**: It reduces each PoC's execution trace to focus on critical behaviors necessary for triggering a bug.
+2. **Clustering via CFG Similarity**: It utilizes a similarity metric based on control-flow graphs to group crashes into identifiable clusters.
+
+The approach addresses the stochastic nature of fuzzing, which often leads to diverse crashes that complicate bug tracking. By accurately clustering crashes, Igor aims to reduce the inflation of bug counts and improve the efficiency of bug analysis.
+
+### Dataset
+- Evaluated against 39 bugs resulting from 254,000 PoCs across 10 different programs.
+- Demonstrated that Igor could accurately group these crashes into 48 uniquely identifiable clusters, significantly reducing the reported bug counts compared to other state-of-the-art methods.
+
+### Tags
+Crash deduplication, automated testing, fuzzing, control-flow graphs, software engineering
+
+### Notes
+- Igor's methodology highlights the limitations of traditional crash bucketing techniques that rely on crash sites or coverage profiles, which can lead to misclassification and inflated bug counts.
+- The results indicate that Igor provides a more reliable means of crash grouping, ultimately saving developer time and resources.
+- This work contributes to the ongoing effort to enhance the effectiveness of automated tools in software testing by minimizing noise in crash reports.
+
+---
+
+---
 ## 📰 [Article Tile]
 **Author(s):**
 **Year of Publication:**
